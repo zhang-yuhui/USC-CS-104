@@ -36,6 +36,8 @@ void split(Node*& in, Node*& odds, Node*& evens)
 
     reverse(odds);
     reverse(evens);
+
+    in = nullptr;
 }
 
 /* If you needed a helper function, write it here */
