@@ -1,4 +1,5 @@
 # CSCI-104 Written Homework #1
+
 ## Problem 1: Runtime Analysis
 
 In Big-$Θ$ notation, analyze the running time of the following four pieces of code/pseudo-code. Describe it as a function of the input (here, $n$).
