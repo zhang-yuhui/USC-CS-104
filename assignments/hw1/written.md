@@ -17,9 +17,7 @@ void f1(int n)
 }
 ```
 
-- **Time complexity:** $\Theta（\log \log n）$
-
-- **Explaintion:** Since $i$ multiply itself every iteration, it grows in the rate of $2^{2^k}$ after $k^{th}$ iteration. Also, because $i \le n$, by solving $2^{2^i}=n$, we can get the answer.
+- Since $i$ multiply itself every iteration, it grows in the rate of $2^{2^k}$ after $k^{th}$ iteration. Also, because $i \le n$, by solving $2^{2^i}=n$, we can get $i\le \log \log n$, so the answer is $\Theta(\log \log n)$.
 
 ### Part (b)
 
@@ -36,8 +34,7 @@ void f2(int n)
 }
 ```
 
-- **Time complexity:** $=\Theta(n^{7\over 2})$
-- **Explaination:** The inner loop takes $\Theta(i^3)$ time, and the inner loop only executes when `i % (int)sqrt(n)) == 0`, which happens at most $n$ times. Thus, overal it is
+- The inner loop takes $\Theta(i^3)$ time, and the inner loop only executes when `i % (int)sqrt(n)) == 0`, which happens at most $n$ times. Thus, overal it is
   $$\Theta(n+ ((\sqrt n)^3 + (2\sqrt n)^3 + \dots +(\sqrt n\sqrt n)^3))$$ 
   $$=\Theta(n+ ((\sqrt n)^3 \cdot (1^3+2^3+\dots+(\sqrt n)^3)))$$
   $$=\Theta(n+ ((\sqrt n)^3 \cdot \frac{n^2 + n + 2n\sqrt{n}}{4}))$$
@@ -59,8 +56,9 @@ for(int i=1; i <= n; i++){
 }
 ```
 
-- **Time complexity**: $\Theta(n \log n)$
-- **Explaination:** The outer loop has runtime of $\Theta(n)$, and the inner loop has runtime of $\Theta(\log n)$ since $m$ doubles every iteration. For the middle loop and the `if` condition, through out the execution, at most $n$ times the `if` statement is true, as it is finding how many numbers in `A[]` is between $1$ and $n$. Thus, the total time complexity is the times that the `if` statement is true times the complexity of inner loop: $n \cdot \Theta(\log n) = \Theta(n \log n)$
+- The outer loop has runtime of $\Theta(n)$, and the inner loop has runtime of $\Theta(\log n)$ since $m$ doubles every iteration.
+- For the middle loop and the `if` condition, through out the execution, at most $n$ times the `if` statement is true, as it is finding how many numbers in `A[]` is between $1$ and $n$.
+- Thus, the total time complexity is the times that the `if` statement is true times the complexity of inner loop: $n \cdot \Theta(\log n) = \Theta(n \log n)$.
 
 ### Part (d)
 
@@ -85,6 +83,10 @@ int f (int n)
 }
 ```
 
+- The outer loop has a complexity of $\Theta (n)$, and in the inner loop, it performs a conditional sizing that if the the index is out of range and resize to 1.5x the previous size.
+- The number of times of resizing is proportional to $\log n$ and thus the total complexity of resizing will be $\sum_{i=0}^{\log n} 10\cdot \left ( 3\over 2\right )^i = 10\Theta\left(\left(3\over 2\right)^{\log n}\right) = \Theta(n)$.
+- Overall, the runtime combined with the outer and inner loop is $\Theta(n)$.
+
 ## Problem 2: Linked List Recursion Tracing
 
 ### Question a
@@ -95,31 +97,27 @@ What linked list is returned if llrec is called with the input linked lists `in1
 The Function Execution in the following order:
 
 1. **First Call:** `llrec(1, 5)`
-   - Both `in1` and `in2` are not `nullptr`.
-   - Set `1->next` to the result of `llrec(5, 2)`.
-   
+   - Set `1 -> next` to the result of `llrec(5, 2)`.
+
 2. **Second Call:** `llrec(5, 2)`
-   - Both `in1` (5) and `in2` (2) are not `nullptr`.
-   - Set `5->next` to the result of `llrec(2, 6)`.
+   - Set `5 -> next` to the result of `llrec(2, 6)`.
 
 3. **Third Call:** `llrec(2, 6)`
-   - Both `in1` (2) and `in2` (6) are not `nullptr`.
-   - Set `2->next` to the result of `llrec(6, 3)`.
+   - Set `2 -> next` to the result of `llrec(6, 3)`.
 
 4. **Fourth Call:** `llrec(6, 3)`
-   - Both `in1` (6) and `in2` (3) are not `nullptr`.
-   - Set `6->next` to the result of `llrec(3, nullptr)`.
+   - Set `6 -> next` to the result of `llrec(3, nullptr)`.
 
 5. **Fifth Call:** `llrec(3, nullptr)`
-   - `in2` is `nullptr`, so return `in1` (3).
+   - `in2` is `nullptr`, so return `in1 = 3`.
 
    After this call:
-   - `6->next` points to `3`.
-   - `2->next` points to `6`, which in turn points to `3`.
-   - `5->next` points to `2`, which in turn points to `6 → 3`.
-   - `1->next` points to `5`, which in turn points to `2 → 6 → 3`.
+   - `6 -> next` points to `3`.
+   - `2 -> next` points to `6`, which points to `3`.
+   - `5 -> next` points to `2`, which points to `6 -> 3`.
+   - `1 -> next` points to `5`, which points to `2 -> 6 -> 3`.
 
-6. **Final Answer:** After the Fifth Call, the return value `1->next = 5`.
+6. **Final Answer:** After the Fifth Call, the returned linked list `in1 = 1 -> 5 -> 2 -> 6 -> 3`.
 
 ### Question b
 
